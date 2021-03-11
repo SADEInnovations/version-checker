@@ -23,7 +23,7 @@ You can also set path to package file, if not in repository root:
 
 ```
       - name: Check version
-        uses: SADEInnovations/version-checker@initial
+        uses: SADEInnovations/version-checker
         id: checker
         with:
           path: services/data-service
