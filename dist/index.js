@@ -627,7 +627,7 @@ const head = require(path.resolve(process.cwd(), file));
 
 console.log(`${base.name} v${base.version} => ${head.name} v${head.version}`);
 
-if (base.name == head.name) {
+if (base.name === head.name) {
   const isGreater = semverCompare(head.version, base.version)
   if (!isGreater) {
     console.log(
@@ -635,7 +635,7 @@ if (base.name == head.name) {
     );
     process.exit(1);
   }
-} else {
+} else if (base.name != null) {
   console.log(`::error file=${file},line=2::Package has a different name.`);
   process.exit(1);
 }
