@@ -15,7 +15,7 @@ Checker is automatically built with pre-commit hook, but if needed, manual build
 
 ```
 - name: Check version
-  uses: SADEInnovations/version-checker@initial
+  uses: SADEInnovations/version-checker
   id: checker
 ```
 
