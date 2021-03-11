@@ -1,0 +1,21 @@
+name: Version Checker
+description: Verify that package.json version has been updated in PR
+author: SADE Innovations Oy
+
+inputs:
+  path:
+    description: "Relative path to package.json, defaults to workspace root"
+    required: false
+    default: "."
+  token:
+    description: "Access token"
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  version:
+    description: "Current package version"
+
+runs:
+  using: "node12"
+  main: "dist/index.js"
