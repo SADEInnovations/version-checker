@@ -9,8 +9,15 @@ jobs:
     name: Run version checker
     steps:
       - uses: actions/checkout@v2
-      - name: Check version
+      - name: Check version from default file (package.json)
         uses: ./
-        id: checker
-      - name: Results
-        run: echo "Version is ${{ steps.checker.outputs.version }}"
+        id: checker1
+      - name: Default file result
+        run: echo "Version is ${{ steps.checker1.outputs.version }}"
+      - name: Check version from custom file (VERSION)
+        uses: ./
+        id: checker2
+        env:
+          INPUT_FILE: "VERSION"
+      - name: Custom file result
+        run: echo "Version is ${{ steps.checker2.outputs.version }}"
