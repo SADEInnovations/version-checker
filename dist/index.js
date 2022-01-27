@@ -1,16 +1,15 @@
-module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 479:
+/***/ 88:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const debug = __nccwpck_require__(621)
-const { MAX_LENGTH, MAX_SAFE_INTEGER } = __nccwpck_require__(355)
-const { re, t } = __nccwpck_require__(537)
+const debug = __nccwpck_require__(427)
+const { MAX_LENGTH, MAX_SAFE_INTEGER } = __nccwpck_require__(293)
+const { re, t } = __nccwpck_require__(523)
 
-const parseOptions = __nccwpck_require__(489)
-const { compareIdentifiers } = __nccwpck_require__(716)
+const parseOptions = __nccwpck_require__(785)
+const { compareIdentifiers } = __nccwpck_require__(463)
 class SemVer {
   constructor (version, options) {
     options = parseOptions(options)
@@ -296,10 +295,10 @@ module.exports = SemVer
 
 /***/ }),
 
-/***/ 346:
+/***/ 309:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const SemVer = __nccwpck_require__(479)
+const SemVer = __nccwpck_require__(88)
 const compare = (a, b, loose) =>
   new SemVer(a, loose).compare(new SemVer(b, loose))
 
@@ -308,17 +307,17 @@ module.exports = compare
 
 /***/ }),
 
-/***/ 974:
+/***/ 123:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const compare = __nccwpck_require__(346)
+const compare = __nccwpck_require__(309)
 const gt = (a, b, loose) => compare(a, b, loose) > 0
 module.exports = gt
 
 
 /***/ }),
 
-/***/ 355:
+/***/ 293:
 /***/ ((module) => {
 
 // Note: this is the semver.org version of the spec that it implements
@@ -342,7 +341,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 621:
+/***/ 427:
 /***/ ((module) => {
 
 const debug = (
@@ -358,7 +357,7 @@ module.exports = debug
 
 /***/ }),
 
-/***/ 716:
+/***/ 463:
 /***/ ((module) => {
 
 const numeric = /^[0-9]+$/
@@ -388,7 +387,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 489:
+/***/ 785:
 /***/ ((module) => {
 
 // parse out just the options we care about so we always get a consistent
@@ -406,11 +405,11 @@ module.exports = parseOptions
 
 /***/ }),
 
-/***/ 537:
+/***/ 523:
 /***/ ((module, exports, __nccwpck_require__) => {
 
-const { MAX_SAFE_COMPONENT_LENGTH } = __nccwpck_require__(355)
-const debug = __nccwpck_require__(621)
+const { MAX_SAFE_COMPONENT_LENGTH } = __nccwpck_require__(293)
+const debug = __nccwpck_require__(427)
 exports = module.exports = {}
 
 // The actual regexps go on exports.re
@@ -595,70 +594,27 @@ createToken('GTE0PRE', '^\\s*>=\\s*0\.0\.0-0\\s*$')
 
 /***/ }),
 
-/***/ 670:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const path = __nccwpck_require__(622);
-const cp = __nccwpck_require__(129);
-const semverCompare = __nccwpck_require__(974);
-
-// Input parameters. See action.yaml
-const { INPUT_PATH, INPUT_TOKEN } = process.env;
-const event = require(process.env.GITHUB_EVENT_PATH);
-const file = path.join(INPUT_PATH, "package.json");
-
-// Fetch the base package.json file
-// https://developer.github.com/v3/repos/contents/#get-contents
-const res = cp.spawnSync("curl", [
-  "--header",
-  "Accept: application/vnd.github.v3.raw",
-  "--header",
-  `Authorization: token ${INPUT_TOKEN}`,
-  `${event.repository.url}/contents/${file}?ref=${event.pull_request.base.ref}`,
-]);
-
-if (res.status != 0) {
-  console.log(`::error ::${res.stderr.toString()}`);
-  process.exit(res.status);
-}
-
-const base = JSON.parse(res.stdout.toString());
-const head = require(path.resolve(process.cwd(), file));
-
-console.log(`${base.name} v${base.version} => ${head.name} v${head.version}`);
-
-if (base.name === head.name) {
-  const isGreater = semverCompare(head.version, base.version)
-  if (!isGreater) {
-    console.log(
-        `::error file=${file},line=3::semVer comparison: Version number not updated!`
-    );
-    process.exit(1);
-  }
-} else if (base.name != null) {
-  console.log(`::error file=${file},line=2::Package has a different name.`);
-  process.exit(1);
-}
-
-// Output version
-console.log(`::set-output name=version::${head.version}`);
-
-
-/***/ }),
-
-/***/ 129:
+/***/ 81:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("child_process");;
+module.exports = require("child_process");
 
 /***/ }),
 
-/***/ 622:
+/***/ 147:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("path");;
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ 17:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("path");
 
 /***/ })
 
@@ -670,8 +626,9 @@ module.exports = require("path");;
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -696,10 +653,60 @@ module.exports = require("path");;
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(670);
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+const path = __nccwpck_require__(17);
+const cp = __nccwpck_require__(81);
+const fs = __nccwpck_require__(147)
+const semverCompare = __nccwpck_require__(123);
+
+// Input parameters. See action.yaml
+const { INPUT_PATH, INPUT_TOKEN, INPUT_FILE } = process.env;
+const event = require(process.env.GITHUB_EVENT_PATH);
+const file = path.join(INPUT_PATH, INPUT_FILE || "package.json");
+
+// Fetch the base package.json file
+// https://developer.github.com/v3/repos/contents/#get-contents
+const res = cp.spawnSync("curl", [
+  "--header",
+  "Accept: application/vnd.github.v3.raw",
+  "--header",
+  `Authorization: token ${INPUT_TOKEN}`,
+  `${event.repository.url}/contents/${file}?ref=${event.pull_request.base.ref}`,
+]);
+
+if (res.status != 0) {
+  console.log(`::error ::${res.stderr.toString()}`);
+  process.exit(res.status);
+}
+
+const base = JSON.parse(res.stdout.toString());
+const head = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), file)).toString());
+
+console.log(`${base.name} v${base.version} => ${head.name} v${head.version}`);
+
+if (base.name === head.name) {
+  const isGreater = semverCompare(head.version, base.version)
+  if (!isGreater) {
+    console.log(
+        `::error file=${file},line=3::semVer comparison: Version number not updated!`
+    );
+    process.exit(1);
+  }
+} else if (base.name != null) {
+  console.log(`::error file=${file},line=2::Package has a different name.`);
+  process.exit(1);
+}
+
+// Output version
+console.log(`::set-output name=version::${head.version}`);
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;

@@ -1,6 +1,6 @@
 {
   "name": "version-checker",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "NPM version checker for pull requests",
   "author": "SADE Innovations Oy",
   "license": "MIT",
@@ -25,6 +25,7 @@
     "semver": "^7.3.2"
   },
   "devDependencies": {
+    "@vercel/ncc": "^0.33.1",
     "husky": "^2.7.0"
   },
   "husky": {

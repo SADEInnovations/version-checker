@@ -1,11 +1,12 @@
 const path = require("path");
 const cp = require("child_process");
+const fs = require("fs")
 const semverCompare = require("semver/functions/gt");
 
 // Input parameters. See action.yaml
-const { INPUT_PATH, INPUT_TOKEN } = process.env;
+const { INPUT_PATH, INPUT_TOKEN, INPUT_FILE } = process.env;
 const event = require(process.env.GITHUB_EVENT_PATH);
-const file = path.join(INPUT_PATH, "package.json");
+const file = path.join(INPUT_PATH, INPUT_FILE || "package.json");
 
 // Fetch the base package.json file
 // https://developer.github.com/v3/repos/contents/#get-contents
@@ -23,7 +24,7 @@ if (res.status != 0) {
 }
 
 const base = JSON.parse(res.stdout.toString());
-const head = require(path.resolve(process.cwd(), file));
+const head = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), file)).toString());
 
 console.log(`${base.name} v${base.version} => ${head.name} v${head.version}`);
 
