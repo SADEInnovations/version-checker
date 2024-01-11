@@ -18,7 +18,7 @@ const res = cp.spawnSync("curl", [
   `${event.repository.url}/contents/${file}?ref=${event.pull_request.base.ref}`,
 ]);
 
-if (res.status != 0) {
+if (res.status !== 0) {
   console.log(`::error ::${res.stderr.toString()}`);
   process.exit(res.status);
 }
