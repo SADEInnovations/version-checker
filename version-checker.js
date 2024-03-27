@@ -1,6 +1,7 @@
 const path = require("path");
 const cp = require("child_process");
-const fs = require("fs")
+const fs = require("fs");
+const os = require("os");
 const semverCompare = require("semver/functions/gt");
 
 // Input parameters. See action.yaml
@@ -42,4 +43,5 @@ if (base.name === head.name) {
 }
 
 // Output version
-console.log(`::set-output name=version::${head.version}`);
+const output = process.env['GITHUB_OUTPUT'];
+fs.appendFileSync(output, `name=version::${head.version}${os.EOL}`);
