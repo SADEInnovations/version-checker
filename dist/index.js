@@ -677,6 +677,14 @@ module.exports = require("fs");
 
 /***/ }),
 
+/***/ 37:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("os");
+
+/***/ }),
+
 /***/ 17:
 /***/ ((module) => {
 
@@ -728,7 +736,8 @@ var __webpack_exports__ = {};
 (() => {
 const path = __nccwpck_require__(17);
 const cp = __nccwpck_require__(81);
-const fs = __nccwpck_require__(147)
+const fs = __nccwpck_require__(147);
+const os = __nccwpck_require__(37);
 const semverCompare = __nccwpck_require__(123);
 
 // Input parameters. See action.yaml
@@ -770,7 +779,8 @@ if (base.name === head.name) {
 }
 
 // Output version
-console.log(`::set-output name=version::${head.version}`);
+const output = process.env['GITHUB_OUTPUT'];
+fs.appendFileSync(output, `name=version::${head.version}${os.EOL}`);
 
 })();
 
